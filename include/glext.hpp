@@ -1,0 +1,50 @@
+#pragma once
+
+#include <GL/gl.h>
+#include <GL/wglext.h>
+#include <GL/glcorearb.h>
+
+class Glext
+{
+public:
+	Glext() = delete;
+	~Glext() = default;
+	static void loadExtensionsWGL();
+	static void loadExtensionsGL();
+};
+
+// GL
+extern PFNGLCREATEBUFFERSPROC glCreateBuffers;
+extern PFNGLNAMEDBUFFERSTORAGEPROC glNamedBufferStorage;
+extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
+extern PFNGLCREATEVERTEXARRAYSPROC glCreateVertexArrays;
+extern PFNGLVERTEXARRAYATTRIBBINDINGPROC glVertexArrayAttribBinding;
+extern PFNGLVERTEXARRAYVERTEXBUFFERPROC glVertexArrayVertexBuffer;
+extern PFNGLVERTEXARRAYATTRIBFORMATPROC glVertexArrayAttribFormat;
+extern PFNGLENABLEVERTEXARRAYATTRIBPROC glEnableVertexArrayAttrib;
+extern PFNGLCREATESHADERPROGRAMVPROC glCreateShaderProgramv;
+extern PFNGLGETPROGRAMIVPROC glGetProgramiv;
+extern PFNGLGETPROGRAMINFOLOGPROC glGetProgramInfoLog;
+extern PFNGLGENPROGRAMPIPELINESPROC glGenProgramPipelines;
+extern PFNGLUSEPROGRAMSTAGESPROC glUseProgramStages;
+extern PFNGLBINDPROGRAMPIPELINEPROC glBindProgramPipeline;
+extern PFNGLPROGRAMUNIFORMMATRIX2FVPROC glProgramUniformMatrix2fv;
+extern PFNGLBINDTEXTUREUNITPROC glBindTextureUnit;
+extern PFNGLCREATETEXTURESPROC glCreateTextures;
+extern PFNGLTEXTUREPARAMETERIPROC glTextureParameteri;
+extern PFNGLTEXTURESTORAGE2DPROC glTextureStorage2D;
+extern PFNGLTEXTURESUBIMAGE2DPROC glTextureSubImage2D;
+extern PFNGLDEBUGMESSAGECALLBACKPROC glDebugMessageCallback;
+extern PFNGLGENFRAMEBUFFERSPROC glGenFrameBuffers;
+extern PFNGLDELETEFRAMEBUFFERSPROC glDeleteFramebuffers;
+extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
+extern PFNGLFRAMEBUFFERTEXTURE2DPROC glFramebufferTexture2D;
+extern PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
+extern PFNGLGENERATEMIPMAPPROC glGenerateMipmap;
+
+// WGL
+extern PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB;
+extern PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
+extern PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
+extern PFNWGLSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+extern PFNWGLGETSWAPINTERVALEXTPROC wglGetSwapIntervalEXT;
