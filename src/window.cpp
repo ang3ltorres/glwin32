@@ -18,6 +18,11 @@ unsigned int Window::scale = 1;
 unsigned int Window::offsetX = 0;
 unsigned int Window::offsetY = 0;
 
+bool Window::up[3];
+bool Window::down[3];
+bool Window::left[3];
+bool Window::right[3];
+
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {	
 	switch (uMsg)
@@ -46,6 +51,18 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			if (Window::resizedCallback)
 				Window::resizedCallback(Window::width, Window::height);
 
+			return 0;
+		}
+
+		case WM_KEYDOWN:
+		{
+			Window::keyDown(wParam);
+			return 0;
+		}
+
+		case WM_KEYUP:
+		{
+			Window::keyUp(wParam);
 			return 0;
 		}
 	}
@@ -122,4 +139,77 @@ bool Window::shouldClose()
 	}
 
 	return false;
+}
+
+void Window::keyDown(WPARAM wParam)
+{
+	switch (wParam)
+	{
+		case VK_UP:
+			if (!Window::up[0]) {
+					Window::up[0] = true;
+					Window::up[1] = true;
+			}
+			break;
+
+		case VK_DOWN:
+			if (!Window::down[0]) {
+					Window::down[0] = true;
+					Window::down[1] = true;
+			}
+			break;
+
+		case VK_LEFT:
+			if (!Window::left[0]) {
+					Window::left[0] = true;
+					Window::left[1] = true;
+			}
+			break;
+				
+		case VK_RIGHT:
+			if (!Window::right[0]) {
+					Window::right[0] = true;
+					Window::right[1] = true;
+			}
+			break;
+	}
+}
+
+void Window::keyUp(WPARAM wParam)
+{
+	switch (wParam)
+	{
+		case VK_UP:
+			Window::up[0] = false;
+			Window::up[2] = true;
+			break;
+
+		case VK_DOWN:
+			Window::down[0] = false;
+			Window::down[2] = true;
+			break;
+
+		case VK_LEFT:
+			Window::left[0] = false;
+			Window::left[2] = true;
+			break;
+				
+		case VK_RIGHT:
+			Window::right[0] = false;
+			Window::right[2] = true;
+			break;
+	}
+}
+
+void Window::resetInput()
+{
+	Window::up[1] = false;
+	Window::down[1] = false;
+	Window::left[1] = false;
+	Window::right[1] = false;
+
+	Window::up[2] = false;
+	Window::down[2] = false;
+	Window::left[2] = false;
+	Window::right[2] = false;
 }

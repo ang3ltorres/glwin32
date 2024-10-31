@@ -30,4 +30,13 @@ public:
 	static unsigned int scale;
 	static unsigned int offsetX;
 	static unsigned int offsetY;
+
+	static bool up[3];
+	static bool down[3];
+	static bool left[3];
+	static bool right[3];
+
+	static void keyDown(WPARAM wParam);
+	static void keyUp(WPARAM wParam);
+	static void resetInput();
 };
