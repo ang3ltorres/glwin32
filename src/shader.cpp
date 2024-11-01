@@ -1,7 +1,7 @@
 #include "shader.hpp"
+#include "glext.hpp"
 
 #include <cstdio>
-#include "glext.hpp"
 
 static char* readFile(const char *fileName)
 {
@@ -20,18 +20,57 @@ static char* readFile(const char *fileName)
 	return text;
 }
 
+static unsigned int compileShader(unsigned int type, const char *source)
+{
+	unsigned int shader = glCreateShader(type);
+	glShaderSource(shader, 1, &source, nullptr);
+	glCompileShader(shader);
+
+	int success;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		char infoLog[512];
+		glGetShaderInfoLog(shader, 512, nullptr, infoLog);
+		printf("Shader compilation error:\n%s\n", infoLog);
+	}
+	return shader;
+}
+
 Shader::Shader(const char *vertexShader, const char *fragmentShader)
 {
 	char *vertexCode = readFile(vertexShader);
 	char *fragmentCode = readFile(fragmentShader);
 
-	vshader = glCreateShaderProgramv(GL_VERTEX_SHADER, 1, &vertexCode);
-	fshader = glCreateShaderProgramv(GL_FRAGMENT_SHADER, 1, &fragmentCode);
+	unsigned int vertex = compileShader(GL_VERTEX_SHADER, vertexCode);
+	unsigned int fragment = compileShader(GL_FRAGMENT_SHADER, fragmentCode);
 
-	glGenProgramPipelines(1, &pipeline);
-	glUseProgramStages(pipeline, GL_VERTEX_SHADER_BIT, vshader);
-	glUseProgramStages(pipeline, GL_FRAGMENT_SHADER_BIT, fshader);
+	program = glCreateProgram();
+	glAttachShader(program, vertex);
+	glAttachShader(program, fragment);
+	glLinkProgram(program);
+
+	int success;
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (!success) {
+			char infoLog[512];
+			glGetProgramInfoLog(program, 512, nullptr, infoLog);
+			printf("Shader linking error:\n%s\n", infoLog);
+	}
+
+	// Delete the shaders as they’re linked into the program now and no longer needed
+	glDeleteShader(vertex);
+	glDeleteShader(fragment);
 
 	delete[] vertexCode;
 	delete[] fragmentCode;
+}
+
+Shader::~Shader()
+{
+	glDeleteProgram(program);
+}
+
+void Shader::use() const
+{
+  glUseProgram(program);
 }

@@ -4,9 +4,8 @@ class Shader
 {
 public:
 	Shader(const char *vertexShader, const char *fragmentShader);
-	~Shader() = default;
+	~Shader();
 
-	unsigned int pipeline;
-	unsigned int vshader;
-	unsigned int fshader;
+	void use() const;
+	unsigned int program;
 };
