@@ -4,6 +4,7 @@
 #include "graphics.hpp"
 
 #include "shader.hpp"
+#include "texture.hpp"
 
 void resized(unsigned int width, unsigned int height)
 {
@@ -23,6 +24,7 @@ Game::Game(HINSTANCE &hInstance, int nCmdShow)
 	Graphics::setClearScreenColor({255, 0, 0, 255});
 
 	Shader s{"../shader/vertex.vs", "../shader/fragment.fs"};
+	Texture {"C:/Users/angel/2D_Engine/res/texture.png"};
 }
 
 Game::~Game()
