@@ -79,3 +79,8 @@ void Graphics::setViewport(unsigned int width, unsigned int height)
 {
 	glViewport(0, 0, width, height);
 }
+
+void Graphics::swapBuffers()
+{
+	SwapBuffers(Graphics::dc);
+}

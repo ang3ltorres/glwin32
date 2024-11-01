@@ -2,7 +2,6 @@
 
 #include "window.hpp"
 #include "graphics.hpp"
-#include "glext.hpp"
 
 #include "shader.hpp"
 
@@ -52,6 +51,5 @@ void Game::draw()
 {
 	Graphics::clearScreen();
 
-	// swap the buffers to show output
-	SwapBuffers(Graphics::dc);
+	Graphics::swapBuffers();
 }
