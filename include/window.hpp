@@ -10,7 +10,7 @@ public:
 	Window(const Window&) = delete;
 	~Window() = default;
 
-	static void initialize(int width, int height, HINSTANCE hInstance, int nCmdShow);
+	static void initialize(int width, int height, const char *title, HINSTANCE hInstance, int nCmdShow);
 	static void finalize();
 
 	static bool shouldClose();

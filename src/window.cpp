@@ -70,7 +70,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
-void Window::initialize(int width, int height, HINSTANCE hInstance, int nCmdShow)
+void Window::initialize(int width, int height, const char *title, HINSTANCE hInstance, int nCmdShow)
 {
 	CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 
@@ -99,7 +99,7 @@ void Window::initialize(int width, int height, HINSTANCE hInstance, int nCmdShow
 	int posY = (screenHeight - (rect.bottom - rect.top)) / 2;
 
 	Window::hwnd = CreateWindowExA(
-		WS_EX_OVERLAPPEDWINDOW, windowClass.lpszClassName, "OpenGL", WS_OVERLAPPEDWINDOW,
+		WS_EX_OVERLAPPEDWINDOW, windowClass.lpszClassName, title, WS_OVERLAPPEDWINDOW,
 		posX, posY, rect.right - rect.left, rect.bottom - rect.top,
 		nullptr, nullptr, hInstance, nullptr
 	);

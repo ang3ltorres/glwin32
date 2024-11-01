@@ -11,7 +11,7 @@ void resized(unsigned int width, unsigned int height)
 
 Game::Game(HINSTANCE &hInstance, int nCmdShow)
 {
-	Window::initialize(800, 600, hInstance, nCmdShow);
+	Window::initialize(800, 600, "OpenGL", hInstance, nCmdShow);
 	Window::resizedCallback = &resized;
 	Window::resizedCallback(800, 600);
 
