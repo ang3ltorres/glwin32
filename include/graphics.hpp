@@ -20,4 +20,5 @@ public:
 
 	static void clearScreen();
 	static void setClearScreenColor(const Color &color);
+	static void setViewport(unsigned int width, unsigned int height);
 };

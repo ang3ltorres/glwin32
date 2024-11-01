@@ -74,3 +74,8 @@ void Graphics::setClearScreenColor(const Color &color)
 {
 	glClearColor(float{color.r} / 255.0f, float{color.g} / 255.0f, float{color.b} / 255.0f, float{color.a} / 255.0f);
 }
+
+void Graphics::setViewport(unsigned int width, unsigned int height)
+{
+	glViewport(0, 0, width, height);
+}

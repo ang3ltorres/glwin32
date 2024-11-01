@@ -4,19 +4,26 @@
 #include "graphics.hpp"
 #include "glext.hpp"
 
+#include "shader.hpp"
+
 void resized(unsigned int width, unsigned int height)
 {
-
+	Graphics::setViewport(width, height);
 }
 
 Game::Game(HINSTANCE &hInstance, int nCmdShow)
 {
-	Window::initialize(800, 600, "OpenGL", hInstance, nCmdShow);
+	unsigned int width = 800;
+	unsigned int height = 600;
+
+	Window::initialize(width, height, "OpenGL", hInstance, nCmdShow);
 	Window::resizedCallback = &resized;
-	Window::resizedCallback(800, 600);
+	Window::resizedCallback(width, height);
 
 	Graphics::initialize();
 	Graphics::setClearScreenColor({255, 0, 0, 255});
+
+	Shader s{"../shader/vertex.vs", "../shader/fragment.fs"};
 }
 
 Game::~Game()
@@ -43,7 +50,6 @@ void Game::update()
 
 void Game::draw()
 {
-	glViewport(0, 0, 800, 600);
 	Graphics::clearScreen();
 
 	// swap the buffers to show output
