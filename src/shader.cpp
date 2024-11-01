@@ -3,6 +3,8 @@
 
 #include <cstdio>
 
+static char infoLog[512];
+
 static char* readFile(const char *fileName)
 {
 	FILE *file; 
@@ -28,8 +30,8 @@ static unsigned int compileShader(unsigned int type, const char *source)
 
 	int success;
 	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+
 	if (!success) {
-		char infoLog[512];
 		glGetShaderInfoLog(shader, 512, nullptr, infoLog);
 		printf("Shader compilation error:\n%s\n", infoLog);
 	}
@@ -51,13 +53,12 @@ Shader::Shader(const char *vertexShader, const char *fragmentShader)
 
 	int success;
 	glGetProgramiv(program, GL_LINK_STATUS, &success);
+
 	if (!success) {
-			char infoLog[512];
-			glGetProgramInfoLog(program, 512, nullptr, infoLog);
-			printf("Shader linking error:\n%s\n", infoLog);
+		glGetProgramInfoLog(program, 512, nullptr, infoLog);
+		printf("Shader linking error:\n%s\n", infoLog);
 	}
 
-	// Delete the shaders as they’re linked into the program now and no longer needed
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 
