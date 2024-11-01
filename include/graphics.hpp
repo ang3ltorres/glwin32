@@ -1,6 +1,9 @@
 #pragma once
 
+#include "utils.hpp"
+
 #include <windef.h>
+
 
 class Graphics
 {
@@ -11,7 +14,10 @@ public:
 	
 	static void initialize();
 	static void finalize();
-
+	
 	static HGLRC rc;
 	static HDC dc;
+
+	static void clearScreen();
+	static void setClearScreenColor(const Color &color);
 };

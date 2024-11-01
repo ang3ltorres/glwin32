@@ -16,6 +16,7 @@ Game::Game(HINSTANCE &hInstance, int nCmdShow)
 	Window::resizedCallback(800, 600);
 
 	Graphics::initialize();
+	Graphics::setClearScreenColor({255, 0, 0, 255});
 }
 
 Game::~Game()
@@ -43,9 +44,7 @@ void Game::update()
 void Game::draw()
 {
 	glViewport(0, 0, 800, 600);
-
-	glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	Graphics::clearScreen();
 
 	// swap the buffers to show output
 	SwapBuffers(Graphics::dc);
