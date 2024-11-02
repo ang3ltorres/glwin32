@@ -2,6 +2,7 @@
 
 #include <wincodec.h>
 #include "glext.hpp"
+#include <cstdio>
 
 static wchar_t* toWideString(const char *string)
 {
@@ -17,9 +18,11 @@ static wchar_t* toWideString(const char *string)
 	return wideString;
 }
 
-Texture::Texture(const char *fileName)
+static IWICImagingFactory *wicFactory = nullptr;
+static IWICBitmapDecoder *wicDecoder = nullptr;
+
+void Texture::initialize()
 {
-	IWICImagingFactory *wicFactory = nullptr;
 	CoCreateInstance
 	(
 		CLSID_WICImagingFactory,
@@ -29,15 +32,26 @@ Texture::Texture(const char *fileName)
 		(LPVOID*)&wicFactory
 	);
 
+	wicFactory->CreateDecoder(GUID_ContainerFormatPng, nullptr, &wicDecoder);
+}
+
+void Texture::finalize()
+{
+	wicDecoder->Release();
+	wicFactory->Release();
+}
+
+Texture::Texture(const char *fileName)
+{
 	wchar_t *w_fileName = toWideString(fileName);
-	IWICBitmapDecoder *wicDecoder = nullptr;
-	wicFactory->CreateDecoderFromFilename
-	(
-		w_fileName,
-		nullptr,
-		GENERIC_READ,
-		WICDecodeMetadataCacheOnLoad,
-		&wicDecoder
+
+	IWICStream *wicStream = nullptr;
+	wicFactory->CreateStream(&wicStream);
+	wicStream->InitializeFromFilename(w_fileName, GENERIC_READ);
+
+	wicDecoder->Initialize(
+		wicStream,
+		WICDecodeMetadataCacheOnLoad
 	);
 
 	IWICBitmapFrameDecode *wicFrame = nullptr;
@@ -68,6 +82,15 @@ Texture::Texture(const char *fileName)
 		buffer
 	);
 
+	printf("First pixel !!\n");
+	for (unsigned int i = 0; i < bufferSize; i += 4)
+	printf("{%u,%u,%u,%u}\t",
+		buffer[i+0],
+		buffer[i+1],
+		buffer[i+2],
+		buffer[i+3]
+	);
+
 	glCreateTextures(GL_TEXTURE_2D, 1, &id);
 	glTextureStorage2D(id, 1, GL_RGBA8, width, height);
 	glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
@@ -81,8 +104,6 @@ Texture::Texture(const char *fileName)
 	delete[] buffer;
 	wicConverter->Release();
 	wicFrame->Release();
-	wicDecoder->Release();
-	wicFactory->Release();
 }
 
 Texture::~Texture()

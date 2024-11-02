@@ -1,6 +1,7 @@
 #include "graphics.hpp"
 #include "window.hpp"
 #include "glext.hpp"
+#include "texture.hpp"
 
 HGLRC Graphics::rc;
 HDC Graphics::dc;
@@ -56,10 +57,13 @@ void Graphics::initialize()
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 	wglSwapIntervalEXT(1);
+	Texture::initialize();
 }
 
 void Graphics::finalize()
 {
+		Texture::finalize();
+
     wglMakeCurrent(nullptr, nullptr);
     wglDeleteContext(Graphics::rc);
     ReleaseDC(Window::hwnd, Graphics::dc);
