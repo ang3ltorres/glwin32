@@ -11,5 +11,6 @@ public:
 	static void finalize();
 
 	Texture(const char *fileName);
+	Texture(unsigned int width, unsigned int height);
 	~Texture();
 };

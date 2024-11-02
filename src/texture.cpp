@@ -106,6 +106,19 @@ Texture::Texture(const char *fileName)
 	wicFrame->Release();
 }
 
+Texture::Texture(unsigned int width, unsigned int height)
+{
+	unsigned char color[4] = { 0, 100, 200, 255 };
+	glCreateTextures(GL_TEXTURE_2D, 1, &id);
+	glTextureStorage2D(id, 1, GL_RGBA8, width, height);
+	glClearTexSubImage(id, 0, 0, 0, 0, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+}
+
+
 Texture::~Texture()
 {
 	glDeleteTextures(1, &id);

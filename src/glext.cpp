@@ -39,6 +39,7 @@ PFNGLLINKPROGRAMPROC glLinkProgram;
 PFNGLDELETESHADERPROC glDeleteShader;
 PFNGLDELETEPROGRAMPROC glDeleteProgram;
 PFNGLUSEPROGRAMPROC glUseProgram;
+PFNGLCLEARTEXSUBIMAGEPROC glClearTexSubImage;
 
 // WGL
 PFNWGLGETEXTENSIONSSTRINGARBPROC wglGetExtensionsStringARB;
@@ -127,4 +128,5 @@ void Glext::loadExtensionsGL()
 	glDeleteShader             = (PFNGLDELETESHADERPROC)wglGetProcAddress("glDeleteShader");
 	glDeleteProgram            = (PFNGLDELETEPROGRAMPROC)wglGetProcAddress("glDeleteProgram");
 	glUseProgram               = (PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram");
+	glClearTexSubImage         = (PFNGLCLEARTEXSUBIMAGEPROC)wglGetProcAddress("glClearTexSubImage");
 }
